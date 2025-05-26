@@ -1,0 +1,453 @@
+{% extends 'base.html' %} 
+{% load static %}  
+{% block content %} 
+
+<head>    
+    <style>        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #projects {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 120px 20px;
+            background: radial-gradient(ellipse at center, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        #projects::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #2575fc, transparent),
+                              radial-gradient(2px 2px at 40px 70px, rgba(37, 117, 252, 0.3), transparent),
+                              radial-gradient(1px 1px at 90px 40px, #2575fc, transparent),
+                              radial-gradient(1px 1px at 130px 80px, rgba(37, 117, 252, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: sparkle 15s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-200px); }
+        }
+
+        #projects h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { 
+                filter: drop-shadow(0 0 10px rgba(37, 117, 252, 0.3));
+                transform: translateY(0px);
+            }
+            to { 
+                filter: drop-shadow(0 0 20px rgba(37, 117, 252, 0.6));
+                transform: translateY(-5px);
+            }
+        }
+
+        #projects h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #2575fc, transparent);
+            border-radius: 2px;
+        }
+
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform: translateY(0px);
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 117, 252, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .project:hover::before {
+            left: 100%;
+        }
+
+        .project:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(37, 117, 252, 0.2),
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(37, 117, 252, 0.3);
+        }
+
+        .project h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project p {
+            font-size: 1rem;
+            color: #7f8c8d;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        .project-number {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            color: #2c3e50;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from { 
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-content a {
+            display: inline-block;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+        }
+
+        .modal-content a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 117, 252, 0.4);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #95a5a6;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #projects {
+                padding: 80px 15px;
+            }
+            
+            .project-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .project {
+                padding: 25px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 30px 20px;
+            }
+        }
+
+        /* Loading Animation for Projects */
+        .project {
+            opacity: 0;
+            animation: projectAppear 0.6s ease-out forwards;
+        }
+
+        .project:nth-child(1) { animation-delay: 0.1s; }
+        .project:nth-child(2) { animation-delay: 0.2s; }
+        .project:nth-child(3) { animation-delay: 0.3s; }
+        .project:nth-child(4) { animation-delay: 0.4s; }
+        .project:nth-child(5) { animation-delay: 0.5s; }
+        .project:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes projectAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+
+<section id="projects">
+    <h2>Recent Projects</h2>
+    <div class="project-container">
+        <div class="project" onclick="openModal('modal1')">
+            <div class="project-number">1</div>
+            <h3>Portfolio Website</h3>
+            <p>A responsive and modern portfolio showcasing my professional work, skills, and achievements with beautiful animations.</p>
+        </div>
+
+        <div class="project" onclick="openModal('modal2')">
+            <div class="project-number">2</div>
+            <h3>Voting System</h3>
+            <p>A secure and efficient digital voting portal designed for college elections with user authentication and real-time results.</p>
+        </div>
+
+        <div class="project" onclick="openModal('modal3')">
+            <div class="project-number">3</div>
+            <h3>BMW Website Clone</h3>
+            <p>Pixel-perfect replica of the official BMW website showcasing advanced CSS techniques and responsive design principles.</p>
+        </div>
+
+        <div class="project" onclick="openModal('modal4')">
+            <div class="project-number">4</div>
+            <h3>Snapchat Login Page</h3>
+            <p>Faithful recreation of Snapchat's login interface with smooth animations and mobile-responsive design.</p>
+        </div>
+
+        <div class="project" onclick="openModal('modal5')">
+            <div class="project-number">5</div>
+            <h3>Movie Ticket Booking</h3>
+            <p>Complete movie ticket booking application with seat selection, payment integration, and user-friendly interface.</p>
+        </div>
+
+        <div class="project" onclick="openModal('modal6')">
+            <div class="project-number">6</div>
+            <h3>Calculator</h3>
+            <p>Feature-rich calculator application built with modern JavaScript, supporting advanced mathematical operations.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Modals for Project Details -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal1')">&times;</span>
+        <h3>Portfolio Website</h3>
+        <p>A comprehensive and responsive portfolio website built to showcase my professional journey, technical skills, and creative projects. Features modern design principles, smooth animations, and optimized performance.</p>
+        <a href="{% url 'home' %}">View Project</a>
+    </div>
+</div>
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal2')">&times;</span>
+        <h3>Voting System</h3>
+        <p>A secure digital voting platform developed for college elections using PHP. Includes user authentication, vote encryption, real-time result tracking, and administrative dashboard for election management.</p>
+        <a href="https://github.com/Nikhilvh2600/Voting-system">View Project</a>
+    </div>
+</div>
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal3')">&times;</span>
+        <h3>BMW Website Clone</h3>
+        <p>A meticulously crafted replica of the official BMW website using pure HTML and CSS. Demonstrates advanced CSS techniques, responsive design, and attention to detail in recreating a premium automotive brand's web presence.</p>
+        <a href="https://nikhilvh2600.github.io/bmw/">View Project</a>
+        <a href="https://github.com/Nikhilvh2600/bmw">View Code</a>
+    </div>
+</div>
+
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal4')">&times;</span>
+        <h3>Snapchat Login Page</h3>
+        <p>Accurate recreation of Snapchat's login interface using HTML and CSS. Features responsive design, smooth animations, and pixel-perfect styling that matches the original application's user experience.</p>
+        <a href="https://nikhilvh2600.github.io/snapchat/">View Project</a>
+        <a href="https://github.com/Nikhilvh2600/snapchat">View Code</a>
+    </div>
+</div>
+
+<div id="modal5" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal5')">&times;</span>
+        <h3>Movie Ticket Booking</h3>
+        <p>A comprehensive movie ticket booking application that enables users to browse movies, select showtimes, choose seats, and complete purchases quickly and efficiently. Built with modern web technologies for optimal user experience.</p>
+        <a href="https://github.com/Nikhilvh2600/Movies_ticket_app">View Project</a>
+    </div>
+</div>
+
+<div id="modal6" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal6')">&times;</span>
+        <h3>Calculator</h3>
+        <p>A sophisticated calculator application built using HTML, CSS, and JavaScript. Features a clean interface, support for complex mathematical operations, keyboard input, and responsive design for all devices.</p>
+        <a href="https://nikhilvh2600.github.io/Calculator/">View Project</a>
+        <a href="https://github.com/Nikhilvh2600/Calculator">View Code</a>
+    </div>
+</div>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "flex";
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+        document.body.style.overflow = "auto"; // Restore background scrolling
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.style.display === 'flex') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = "auto";
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

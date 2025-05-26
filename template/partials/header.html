@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Navbar</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Professional Navbar */
+        .navbar {
+            background: rgba(15, 32, 39, 0.85);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 32, 39, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            height: 72px;
+        }
+
+        /* Professional Logo */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            letter-spacing: -0.2px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .nav-links .active {
+            color: #ffffff;
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        /* Professional Search */
+        .search-container {
+            position: relative;
+            margin-left: auto;
+            margin-right: 24px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            width: 280px;
+        }
+
+        .search-bar:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-bar.focused {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 12px 16px;
+            flex: 1;
+            font-family: inherit;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-icon {
+            color: rgba(255, 255, 255, 0.6);
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+        }
+
+        .search-icon:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Search Results */
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: rgba(15, 32, 39, 0.95);
+            backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            max-height: 320px;
+            overflow-y: auto;
+            display: none;
+            z-index: 50;
+        }
+
+        .search-results.show {
+            display: block;
+            animation: fadeInUp 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-result-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.15);
+            border-radius: 6px;
+            color: #3b82f6;
+            font-size: 11px;
+        }
+
+        .search-result-content {
+            flex: 1;
+        }
+
+        .search-result-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .search-result-type {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .no-results {
+            padding: 24px 16px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-toggle:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Content Spacer */
+        .content {
+            flex-grow: 1;
+            padding-top: 72px;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #container {
+                padding: 0 20px;
+                height: 64px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo::before {
+                width: 28px;
+                height: 28px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 32, 39, 0.98);
+                backdrop-filter: saturate(180%) blur(20px);
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 16px 24px;
+                border-radius: 0;
+                font-size: 16px;
+            }
+
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .content {
+                padding-top: 64px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #container {
+                padding: 0 16px;
+            }
+        }
+
+        /* Custom Scrollbar for Search Results */
+        .search-results::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .search-results::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="body">
+
+    <nav class="navbar" id="navbar">
+        <div id="container">
+            <a href="{% url 'home' %}" class="logo">NIKHIL</a>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." id="searchInput">
+                    <i class="fas fa-search search-icon" onclick="performSearch()"></i>
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %} active {% endif %}">Home</a></li>
+                <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %} active {% endif %}">About</a></li>
+                <li><a href="{% url 'projects' %}" class="{% if request.resolver_match.url_name == 'projects' %} active {% endif %}">Projects</a></li>
+                <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %} active {% endif %}">Contact</a></li>
+            </ul>
+
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // Professional search data
+        const searchData = [
+            { title: 'Portfolio Website', type: 'project', icon: 'fas fa-globe', url: '/projects/' },
+            { title: 'Voting System', type: 'project', icon: 'fas fa-vote-yea', url: '/projects/' },
+            { title: 'BMW Website Clone', type: 'project', icon: 'fas fa-car', url: '/projects/' },
+            { title: 'Snapchat Login Page', type: 'project', icon: 'fab fa-snapchat', url: '/projects/' },
+            { title: 'Movie Ticket Booking', type: 'project', icon: 'fas fa-ticket-alt', url: '/projects/' },
+            { title: 'Calculator', type: 'project', icon: 'fas fa-calculator', url: '/projects/' },
+            { title: 'JavaScript Development', type: 'skill', icon: 'fab fa-js', url: '/about/' },
+            { title: 'Python Programming', type: 'skill', icon: 'fab fa-python', url: '/about/' },
+            { title: 'HTML & CSS', type: 'skill', icon: 'fas fa-code', url: '/about/' },
+            { title: 'React Framework', type: 'skill', icon: 'fab fa-react', url: '/about/' },
+            { title: 'Django Framework', type: 'skill', icon: 'fas fa-server', url: '/about/' },
+            { title: 'Contact Information', type: 'page', icon: 'fas fa-envelope', url: '/contact/' },
+            { title: 'About Me', type: 'page', icon: 'fas fa-user', url: '/about/' }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchBar = document.querySelector('.search-bar');
+        const navbar = document.getElementById('navbar');
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                searchResults.classList.remove('show');
+                return;
+            }
+
+            const filteredResults = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.type.toLowerCase().includes(query)
+            );
+
+            displaySearchResults(filteredResults, query);
+        });
+
+        searchInput.addEventListener('focus', function() {
+            searchBar.classList.add('focused');
+        });
+
+        searchInput.addEventListener('blur', function() {
+            setTimeout(() => {
+                searchBar.classList.remove('focused');
+                searchResults.classList.remove('show');
+            }, 200);
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function displaySearchResults(results, query) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No results found for "' + query + '"</div>';
+            } else {
+                searchResults.innerHTML = results.map(item => 
+                    `<div class="search-result-item" onclick="navigateToResult('${item.url}')">
+                        <div class="search-result-icon">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="search-result-content">
+                            <div class="search-result-title">${item.title}</div>
+                            <div class="search-result-type">${item.type}</div>
+                        </div>
+                    </div>`
+                ).join('');
+            }
+            searchResults.classList.add('show');
+        }
+
+        function navigateToResult(url) {
+            window.location.href = url;
+        }
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            if (query) {
+                const firstResult = searchData.find(item => 
+                    item.title.toLowerCase().includes(query)
+                );
+                if (firstResult) {
+                    navigateToResult(firstResult.url);
+                }
+            }
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const toggle = document.querySelector('.mobile-toggle i');
+            
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                toggle.classList.remove('fa-bars');
+                toggle.classList.add('fa-times');
+            } else {
+                toggle.classList.remove('fa-times');
+                toggle.classList.add('fa-bars');
+            }
+        }
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('navLinks');
+                const toggle = document.querySelector('.mobile-toggle i');
+                
+                navLinks.classList.remove('active');
+                toggle.classList.remove('fa-times');
+                toggle.classList.add('fa-bars');
+            });
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchResults.classList.remove('show');
+                searchBar.classList.remove('focused');
+            }
+        });
+    </script>
+
+</body>
+</html>

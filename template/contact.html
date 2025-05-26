@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <style>
+        #contact {
+            background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 50px auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #contact h2 {
+            font-size: 2.5rem;
+            color: #2575fc;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 10px rgba(37, 117, 252, 0.5);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        #contact p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        #contact .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #2575fc;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+            margin-top: 10px;
+        }
+
+        #contact .btn:hover {
+            background: #f0f0f0;
+            border: 2px solid white;
+            transform: scale(1.1);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: white;
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<section id="contact">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out for collaboration or project inquiries.</p>
+    <a href="nikhilvh2600@gmail.com" class="btn">Email Me</a>
+    <div class="social-links">
+        <a href="https://www.instagram.com/mr._.nikhil_raje/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/Nikhilvh2600" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/nikhil-v-2600vh" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+</section>
+{% endblock %}

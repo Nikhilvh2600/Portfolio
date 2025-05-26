@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Skills - Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 80%, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+            animation: pulseBackground 8s infinite alternate;
+        }
+
+        @keyframes pulseBackground {
+            0% { background: radial-gradient(circle at 20% 80%, #0f2027 0%, #203a43 40%, #2c5364 100%); }
+            100% { background: radial-gradient(circle at 20% 80%, #0a1a24 0%, #1b3540 40%, #254b5d 100%); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scaleX(1); }
+            50% { opacity: 0.7; transform: scaleX(1.1); }
+        }
+
+        /* About Section */
+        .about {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 4rem 3rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                        0 0 30px rgba(37, 117, 252, 0.2);
+            animation: floatUp 4s ease-in-out infinite alternate;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #2575fc, #6a11cb, #2575fc);
+            border-radius: 25px;
+            z-index: -1;
+            animation: borderGlow 3s infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-15px); }
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #2575fc;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 10px rgba(37, 117, 252, 0.5);
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* Education, Certifications, Achievements */
+        .info-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(37, 117, 252, 0.2);
+            border-color: rgba(37, 117, 252, 0.3);
+        }
+
+        .info-card h3 {
+            color: #2575fc;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            border-left: 4px solid #2575fc;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
+        }
+
+        /* Interstellar Skills Section */
+        .skills-universe {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(45deg, rgba(15, 32, 39, 0.9), rgba(44, 83, 100, 0.9));
+        }
+
+        .skills-center {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blackhole {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 12s linear infinite, neonGlow 4s infinite alternate;
+            box-shadow: 0 0 50px rgba(37, 117, 252, 0.5),
+                        inset 0 0 30px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        .blackhole::before {
+            content: 'SKILLS';
+            color: #2575fc;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(37, 117, 252, 0.8);
+            animation: counter-spin 12s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes counter-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 0 0 30px rgba(37, 117, 252, 0.5),
+                            0 0 60px rgba(37, 117, 252, 0.3),
+                            inset 0 0 30px rgba(0, 0, 0, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 50px rgba(37, 117, 252, 0.8),
+                            0 0 100px rgba(37, 117, 252, 0.5),
+                            inset 0 0 30px rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        /* Circular Orbit Container */
+        .orbit-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Floating Tech Logos with Perfect Circle Orbit */
+        .tech-orbit {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: circularOrbit 15s linear infinite, float 3s ease-in-out infinite alternate;
+            top: 50%;
+            left: 50%;
+            margin-top: -35px;
+            margin-left: -35px;
+        }
+
+        .tech-orbit:hover {
+            transform: scale(1.3);
+            background: rgba(37, 117, 252, 0.3);
+            box-shadow: 0 0 30px rgba(37, 117, 252, 0.8);
+            z-index: 15;
+        }
+
+        .tech-orbit i {
+            font-size: 1.8rem;
+            color: #2575fc;
+            text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+        }
+
+        /* Perfect Circular Orbit Animation */
+        @keyframes circularOrbit {
+            0% {
+                transform: rotate(0deg) translateX(200px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(200px) rotate(-360deg);
+            }
+        }
+
+        @keyframes float {
+            from { 
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            to { 
+                box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Positioning for different tech icons with perfect spacing */
+        .tech-1 { animation-delay: 0s; }
+        .tech-2 { animation-delay: -1.875s; }
+        .tech-3 { animation-delay: -3.75s; }
+        .tech-4 { animation-delay: -5.625s; }
+        .tech-5 { animation-delay: -7.5s; }
+        .tech-6 { animation-delay: -9.375s; }
+        .tech-7 { animation-delay: -11.25s; }
+        .tech-8 { animation-delay: -13.125s; }
+
+        /* Skills List */
+        .skills-details {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 3rem;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 5;
+        }
+
+        .skills-details h3 {
+            color: #2575fc;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background: rgba(37, 117, 252, 0.2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(37, 117, 252, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(37, 117, 252, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .skills-center {
+                width: 350px;
+                height: 350px;
+            }
+
+            .blackhole {
+                width: 150px;
+                height: 150px;
+            }
+
+            .blackhole::before {
+                font-size: 1.2rem;
+            }
+
+            .tech-orbit {
+                width: 55px;
+                height: 55px;
+                margin-top: -27.5px;
+                margin-left: -27.5px;
+            }
+
+            .tech-orbit i {
+                font-size: 1.4rem;
+            }
+
+            @keyframes circularOrbit {
+                0% {
+                    transform: rotate(0deg) translateX(140px) rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg) translateX(140px) rotate(-360deg);
+                }
+            }
+
+            .skills-details {
+                bottom: 1rem;
+                padding: 1rem 2rem;
+                max-width: 90%;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-center {
+                width: 280px;
+                height: 280px;
+            }
+
+            @keyframes circularOrbit {
+                0% {
+                    transform: rotate(0deg) translateX(100px) rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+                }
+            }
+        }
+
+        /* Animation delays for staggered entrance */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- About Section -->
+    <section class="about fade-in-up">
+        <h2>About Me</h2>
+        <p>A motivated and detail-oriented BCA graduate with a strong foundation in computer applications, programming languages, and technical skills.</p>
+        <p>Eager to contribute to organizational success and keen to learn and grow in the field of computer science.</p>
+        <p>Proficient in web development and database management, seeking a challenging opportunity to apply my skills and gain practical experience in the industry.</p>
+    </section>
+
+    <!-- Education, Certifications, Achievements -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <!-- Education -->
+                <div class="info-card fade-in-up delay-1">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="info-item">
+                        <strong>BCA</strong><br>
+                        Sharnbasava University, Kalaburagi<br>
+                        <em>2021 – 2024</em>
+                    </div>
+                    <div class="info-item">
+                        <strong>PU</strong><br>
+                        Govt. PU College, Malleswaram, Bangalore<br>
+                        <em>2019 – 2021</em>
+                    </div>
+                    <div class="info-item">
+                        <strong>SSLC</strong><br>
+                        Prakash Vidyalaya High School, Bidar<br>
+                        <em>2018</em>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="info-card fade-in-up delay-2">
+                    <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                    <div class="info-item">
+                        <strong>Python Full Stack Development</strong><br>
+                        PySpiders, Bangalore<br>
+                        <em>2024</em>
+                    </div>
+                    <div class="info-item">
+                        <strong>Python Programming Course</strong><br>
+                        DHAAPPS Edutech<br>
+                        <em>2024</em>
+                    </div>
+                    <div class="info-item">
+                        <strong>Introduction to Ethical Hacking</strong><br>
+                        Great Learning Academy<br>
+                        <em>2023</em>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="info-card fade-in-up delay-3">
+                    <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                    <div class="info-item">
+                        <strong>🏃‍♂️ 1st Place in 3000m Race</strong><br>
+                        School Level Competition<br>
+                        <em>Athletic Excellence</em>
+                    </div>
+                    <div class="info-item">
+                        <strong>🏅 Leadership Award Recipient</strong><br>
+                        Recognition for Leadership Skills<br>
+                        <em>Academic Achievement</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interstellar Skills Section -->
+    <section class="skills-universe">
+        <div class="skills-center">
+            <div class="blackhole"></div>
+            
+            <div class="orbit-container">
+                <!-- Floating Tech Icons in Perfect Circle -->
+                <div class="tech-orbit tech-1">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="tech-orbit tech-2">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tech-orbit tech-3">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <div class="tech-orbit tech-4">
+                    <i class="fab fa-js-square"></i>
+                </div>
+                <div class="tech-orbit tech-5">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="tech-orbit tech-6">
+                    <i class="fab fa-react"></i>
+                </div>
+                <div class="tech-orbit tech-7">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="tech-orbit tech-8">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-details">
+            <h3>Technical Stack</h3>
+            <div class="skills-tags">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Django</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">Power BI</span>
+                <span class="skill-tag">Bootstrap</span>
+                <span class="skill-tag">VS Code</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in-up class
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Tech orbit hover effects with improved interaction
+        document.querySelectorAll('.tech-orbit').forEach(orbit => {
+            orbit.addEventListener('mouseenter', () => {
+                orbit.style.animationPlayState = 'paused';
+                orbit.style.zIndex = '20';
+            });
+            
+            orbit.addEventListener('mouseleave', () => {
+                orbit.style.animationPlayState = 'running';
+                orbit.style.zIndex = '1';
+            });
+        });
+
+        // Dynamic skill tag highlighting with staggered animation
+        const skillTags = document.querySelectorAll('.skill-tag');
+        skillTags.forEach((tag, index) => {
+            setTimeout(() => {
+                tag.style.animation = `pulse 2s infinite ${index * 0.2}s`;
+            }, 2000);
+            
+            // Add click interaction
+            tag.addEventListener('click', () => {
+                tag.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    tag.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Add orbital speed control on scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            const techOrbits = document.querySelectorAll('.tech-orbit');
+            techOrbits.forEach(orbit => {
+                orbit.style.animationDuration = '8s';
+            });
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                techOrbits.forEach(orbit => {
+                    orbit.style.animationDuration = '15s';
+                });
+            }, 150);
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

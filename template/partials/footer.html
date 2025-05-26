@@ -1,0 +1,53 @@
+<style>
+    .footer {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        box-shadow: 0px -4px 20px rgba(15, 32, 39, 0.8), 
+                    0px -4px 40px rgba(32, 58, 67, 1),
+                    0px -4px 60px rgba(44, 83, 100, 1);
+        animation: neon-glow-footer 4s infinite alternate;
+    }
+
+    @keyframes neon-glow-footer {
+        0% {
+            box-shadow: 0px -4px 20px rgba(15, 32, 39, 0.8), 
+                        0px -4px 40px rgba(32, 58, 67, 1),
+                        0px -4px 60px rgba(44, 83, 100, 1);
+        }
+        100% {
+            box-shadow: 0px -4px 20px rgba(10, 26, 36, 0.8), 
+                        0px -4px 40px rgba(27, 53, 64, 1),
+                        0px -4px 60px rgba(37, 75, 93, 1);
+        }
+    }
+
+    .social-icons {
+        margin-top: 10px;
+    }
+
+    .social-icons a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-size: 24px;
+        transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+        color: #FFD700;
+        text-shadow: 0px 0px 15px #FFD700;
+    }
+</style>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 NIKHIL. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/mr._.nikhil_raje/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/Nikhilvh2600" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/nikhil-v-2600vh" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
+</footer>
